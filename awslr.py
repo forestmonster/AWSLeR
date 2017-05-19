@@ -329,9 +329,21 @@ def main():
     role = assume_role()
     client = get_client(role)
     command_id = send_command(client)
-    result = get_command_result(client, command_id, INSTANCE)
-    logger.debug(pprint(result))
-
+    waiting = 0
+    while waiting < 8:
+        result = get_command_result(client, command_id, INSTANCE)
+        if result['StatusDetails'] != 'Success':
+            logger.debug("StatusDetails is \"" + result['StatusDetails'] +
+                         ",\" sleeping 2...")
+            waiting += 1
+            time.sleep(2)
+        else:
+            logger.debug("StatusDetails \"Success\" returned:")
+            pprint(result)
+            break
+    else:
+        logger.debug("Done trying, ended with result: ")
+        logger.debug(pprint(result))
 
 if __name__ == "__main__":
     arguments = docopt(__doc__, version='awslr.py 0.8')
