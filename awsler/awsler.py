@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Usage: awslr.py [ -i --instance <instance_id> ]
+"""Usage: awsler.py [ -i --instance <instance_id> ]
 
 Run live response-style incident response scripts against a set of AWS
 instances, or a single AWS instance.
@@ -20,7 +20,7 @@ from docopt import docopt
 from pprint import pprint
 
 logging.basicConfig()
-logger = logging.getLogger('awslr')
+logger = logging.getLogger('awsler')
 logger.setLevel(logging.DEBUG)
 
 INCIDENT = 'SECURITY-123-testing'
@@ -346,6 +346,6 @@ def main():
         logger.debug(pprint(result))
 
 if __name__ == "__main__":
-    arguments = docopt(__doc__, version='awslr.py 0.8')
+    arguments = docopt(__doc__, version='awsler.py 0.3')
     print(arguments)
     main()
